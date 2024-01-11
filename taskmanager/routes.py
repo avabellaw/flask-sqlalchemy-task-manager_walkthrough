@@ -4,7 +4,9 @@ from taskmanager.models import Category, Task
 
 @app.route("/")
 def home():
-    return render_template("tasks.html")
+    tasks = list(Task.query.order_by(Task.due_date).all())
+        
+    return render_template("tasks.html", tasks=tasks)
 
 
 @app.route("/categories")
@@ -32,11 +34,10 @@ def add_task():
             task_desc = request.form.get("task_desc"),
             is_urgent = bool(True if request.form.get("is_urgent") else False),
             due_date = request.form.get("due_date"), 
-            category_id = request.form.get("category_id")
+            category_id = request.form.get("category_name")
         )
-        
-        category = Category(category_name=request.form.get("category_name"))
-        db.session.add(category)
+
+        db.session.add(task)
         db.session.commit()
         return redirect(url_for("home"))
     return render_template("add_task.html", categories=categories)

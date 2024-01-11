@@ -15,3 +15,8 @@ document.addEventListener('DOMContentLoaded', function () {
     let datepicker = document.querySelectorAll('select');
     M.FormSelect.init(datepicker);
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    var tasks = document.querySelectorAll('.collapsible');
+    M.Collapsible.init(tasks);
+  });
